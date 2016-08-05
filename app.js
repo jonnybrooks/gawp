@@ -1,0 +1,42 @@
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var watch = require('watch');
+var fs = require('fs');
+var path = require('path');
+
+var users = {};
+var projects = JSON.parse(fs.readFileSync('gawp.json')).projects;
+    projects = Object.keys(projects).length === 0 ? { default: path.join(__dirname, 'public') } : projects;
+
+app.set('port', (3000));
+
+app.get('/gawp', function (req, res){
+  fs.readFile('scripts/inject.js', function (err, data){
+    if (err) throw err;
+    res.set('Content-Type', 'text/javascript');
+    res.status(200).end(data);
+  });
+});
+
+http.listen(app.get('port'), function () {
+  console.log('Server running on localhost:'+ app.get('port'));
+});
+
+io.sockets.on('connection', function (socket){
+  users[socket.conn.id] = socket;
+  socket.on('link_project', function (data){
+    if(typeof data.project === "undefined" || typeof projects[data.project] === "undefined") return;
+    watch.watchTree(projects[data.project], function (f, curr, prev) {
+      if(typeof f == "object" && prev === null && curr === null) return;
+      if(typeof users[socket.conn.id] === "undefined") return;
+      users[socket.conn.id].emit('reload');
+    });    
+  });
+  socket.on('end', function (data){
+    if(typeof data.project === "undefined" || typeof projects[data.project] === "undefined") return;
+    watch.unwatchTree(projects[data.project]);
+    if(typeof users[socket.conn.id] === "undefined") return;
+    delete users[socket.conn.id];
+  });
+});

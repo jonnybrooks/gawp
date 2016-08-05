@@ -1,0 +1,17 @@
+{
+  "name": "gawp",
+  "version": "0.1.0",
+  "preferGlobal": true,
+  "repository": "jonnybrooks/gawp",
+  "bin": {
+    "gawp": "./bin/gawp"
+  },  
+  "scripts": {
+    "start": "gawp"
+  },
+  "dependencies": {
+    "express": "~4.13.1",
+    "socket.io": "^1.4.8",
+    "watch": "^0.19.1"
+  }  
+}
