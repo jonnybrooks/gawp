@@ -7,7 +7,7 @@
     "gawp": "./bin/gawp"
   },  
   "scripts": {
-    "start": "gawp"
+    "install": "gawp"
   },
   "dependencies": {
     "express": "~4.13.1",
