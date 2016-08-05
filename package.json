@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "preferGlobal": true,
   "repository": "jonnybrooks/gawp",
+  "license" : "MIT",
   "bin": {
     "gawp": "./bin/gawp"
   },  
