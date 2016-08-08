@@ -8,7 +8,8 @@
     "gawp": "./bin/gawp"
   },  
   "scripts": {
-    "install": "node ./bin/gawp"
+    "install": "node ./bin/gawp",
+    "publish:patch": "npm version patch --git-tag-version=false -m \"~ Bumped to %s\" && git push && npm publish"
   },
   "dependencies": {
     "express": "~4.13.1",
