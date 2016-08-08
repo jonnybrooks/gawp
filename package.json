@@ -8,7 +8,7 @@
     "gawp": "./bin/gawp"
   },  
   "scripts": {
-    "install": "gawp"
+    "install": "node ./bin/gawp"
   },
   "dependencies": {
     "express": "~4.13.1",
