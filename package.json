@@ -1,19 +1,19 @@
 {
   "name": "gawp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "preferGlobal": true,
   "repository": "jonnybrooks/gawp",
-  "license" : "MIT",
+  "license": "MIT",
   "bin": {
     "gawp": "./bin/gawp"
-  },  
+  },
   "scripts": {
     "install": "node ./bin/gawp",
-    "publish:patch": "npm version patch --git-tag-version=false -m \"~ Bumped to %s\" && git push && npm publish"
+    "publish:patch": "npm version patch && git commit -a -m \"~ Bumping the fix (patch) number\" && git push && npm publish"
   },
   "dependencies": {
     "express": "~4.13.1",
     "socket.io": "^1.4.8",
     "watch": "^0.19.1"
-  }  
+  }
 }
