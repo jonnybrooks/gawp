@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Gawp Monitor</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="http://localhost:3000/gawp" data-project="default"></script>
+		<style>
+			* { font-family: 'Roboto', Arial, Sans-serif; font-weight: 300; box-sizing: border-box;}
+			html, body { width: 100%; height: 100%; overflow-x: hidden; margin: 0;}
+			.content-wrapper {
+				width: 60%;
+				height: 100%;
+				margin: 0 auto;
+			}
+			h1 {
+				color: lightblue;
+				font-size: 3em;
+			}			
+			.projects-wrapper {
+				width: 100%;
+				background: #ddd;
+				padding-bottom: 5px;
+				border-radius: 3px;
+			}
+			.project { 
+			    display: table;
+			    table-layout: fixed;
+			    border-spacing: 25px 10px;
+			    width: 100%;			
+			}
+			.input-wrapper {
+				display: table-cell;
+				width: 20%;
+				vertical-align: bottom;
+			}
+			.input-wrapper:nth-of-type(2) {
+				width: 60%;
+			}
+			.input-wrapper:nth-of-type(3) {
+				width: 10%;
+			}
+			label {
+				display: block;
+				margin-bottom: 10px;
+				text-transform: uppercase;
+			}
+			input { 
+				background: transparent;
+				padding: 10px 10px 10px 0; 
+				width: 100%;
+				border: none;
+				border-bottom: 2px solid white;
+				color: white;
+				font-size: 1.5em;
+			}
+			input:focus {
+				outline: none;
+				border-color: lightblue;	
+			}		
+			button {
+				width: 100%;
+			    height: 49px;
+			    background: white;
+			    border: none;
+			    text-transform: uppercase;
+			    color: #888;
+			    font-weight: bold;
+			    letter-spacing: 1px;
+			}					
+		</style>
+	</head>
+	<body>
+		<div class="content-wrapper">
+			<h1>gawp</h1>
+			<div class="projects-wrapper"></div>
+		</div>
+	</body>
+	<script id="template--project" type="text/template">
+		<div class="project">
+			<div class="input-wrapper">
+				<input class="name" placeholder="Project Name" name="projectName" type="text" />
+			</div>
+			<div class="input-wrapper">
+				<input class="path" placeholder="path/to/project/files" name="projectPath" type="text" />
+			</div>
+			<div class="input-wrapper">
+				<!--<label>Reload</label>-->
+				<button class="reload" data-href="">Reload</button>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		$.getJSON( "http://localhost:3000/projects", function(projects) {
+			$.each(projects, function(name, path){
+				var frag = utils.fragment($('#template--project').html());
+				$(frag).find('.project .name').val(name);
+				$(frag).find('.project .path').val(path);
+				$('.projects-wrapper').append(frag);
+			});
+		});
+
+		var utils = {
+			fragment: function (htmlStr) {
+				var frag = document.createDocumentFragment();
+				var temp = document.createElement('div');
+				temp.innerHTML = htmlStr;
+				while (temp.firstChild) { frag.appendChild(temp.firstChild);}
+				return frag;
+		    }  
+		};
+	</script>
+</html>

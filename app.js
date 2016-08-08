@@ -11,12 +11,28 @@ var projects = JSON.parse(fs.readFileSync('gawp.json')).projects;
 
 app.set('port', (3000));
 
+app.all('*', function(req, res, next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+app.get('/projects', function (req, res){
+  res.set('Content-Type', 'application/json');
+  res.status(200).end(JSON.stringify(projects));
+});
+
 app.get('/gawp', function (req, res){
   fs.readFile('scripts/inject.js', function (err, data){
     if (err) throw err;
     res.set('Content-Type', 'text/javascript');
     res.status(200).end(data);
   });
+});
+
+app.get('/', function (req, res){
+  res.status(200).sendFile(path.join(__dirname, 'public/monitor.html'));
 });
 
 http.listen(app.get('port'), function () {
