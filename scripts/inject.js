@@ -7,13 +7,18 @@ script.onload = function(){
 	script = document.createElement('script');
 	script.innerHTML = `
 		var socketio = io('http://localhost:3000');
-		socketio = socketio.connect();
-		socketio.emit('link_project', {project: "${project}"});
-		socketio.on('reload', function(data){
-			socketio.emit('end', {id: socketio.id});
+		socketio = socketio.connect();		
+		socketio.on('connect', function(){
+			socketio.emit('link_project', {project: "${project}"});
+			console.log('Watch script initialised. Changes to the filesystem will reload the page automatically :)');
+		});			
+		socketio.on('reconnect', reload);	
+		socketio.on('reload', reload);
+		
+	  	function reload(data){
+	  		socketio.emit('end', {id: socketio.id});
 			location.reload();
-	  	})
-		console.log('Watch script initialised. Changes to the filesystem will reload the page automatically :)');
+	  	}	
 	`;
 	head.insertBefore(script, ref); 
 }
