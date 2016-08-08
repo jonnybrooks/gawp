@@ -9,7 +9,9 @@
   },
   "scripts": {
     "install": "node ./bin/gawp",
-    "publish:patch": "npm version patch -m \"Bumped to %s\" && git push && npm publish"
+    "publish:patch": "npm version patch -m \"~ Added fix (patch). Bumping to %s\" && git push && npm publish",
+    "publish:minor": "npm version minor -m \"~ Added feature (minor). Bumping to %s\" && git push && npm publish",
+    "publish:major": "npm version major -m \"~ Added breaking (major). Bumping to %s\" && git push && npm publish"
   },
   "dependencies": {
     "express": "~4.13.1",

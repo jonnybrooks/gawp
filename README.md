@@ -30,24 +30,30 @@ functionality later on (like building a nice beautiful front end for managing cu
 
 Useage is simple - all you have to do is add the project name and directory path to the projects object in `gawp.json`:
 
+
 #### `gawp.json` (example setup)
 
 <pre>
+
 {
   "projects": {
     "myProjectName": "path/to/my/project",
     "someOtherProject": "path/to/a/different/one"
   }
 }
+
 </pre>
 
 Then you just reference it in your HTML using a `<script>` tag with the following signature 
 (making sure the `data-project` attribute matches one of the projects specified in `gawp.json`):
 
+
 #### `index.html` (excerpt from `<head>`)
 
 <pre>
+
 &lt;script src="http://localhost:3000/gawp" data-project="myProjectName"&gt;&lt;/script&gt;
+
 </pre>
 
 If the projects object in `gawp.json` is empty, the server will fallback to a default configuration, where the project name
