@@ -1,21 +1,38 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var watch = require('watch');
 var fs = require('fs');
 var path = require('path');
+var bodyParser = require('body-parser');
 
 var users = {};
 var projects = JSON.parse(fs.readFileSync('gawp.json')).projects;
     projects = Object.keys(projects).length === 0 ? { default: path.join(__dirname, 'public') } : projects;
 
 app.set('port', (3000));
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.all('*', function(req, res, next){
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
+});
+
+app.get('/', function (req, res){
+  res.status(200).sendFile(path.join(__dirname, 'public/monitor.html'));
+});
+
+app.post('/update', function (req, res){
+  fs.writeFile('gawp.json', JSON.stringify({ projects: req.body }, null, '\t'), (err) => {
+    if (err) throw err;
+    console.log('Written to gawp.json from gawp web monitor');
+    res.status(200).end('success');
+  });  
 });
 
 app.get('/projects', function (req, res){
@@ -29,10 +46,6 @@ app.get('/gawp', function (req, res){
     res.set('Content-Type', 'text/javascript');
     res.status(200).end(data);
   });
-});
-
-app.get('/', function (req, res){
-  res.status(200).sendFile(path.join(__dirname, 'public/monitor.html'));
 });
 
 http.listen(app.get('port'), function () {

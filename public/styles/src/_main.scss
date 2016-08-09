@@ -1,0 +1,152 @@
+//mixins
+
+@mixin placeholder($col){
+  &::-webkit-input-placeholder {
+    color: $col;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $col;  
+  }
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: $col;  
+  }
+  &:-ms-input-placeholder {  
+    color: $col;  
+  }    
+}
+
+/* main styles */
+
+* {
+  font-family: 'Jaldi', sans-serif;
+  font-weight: 300;  
+  box-sizing: border-box;
+}
+html, body { 
+  width: 100%; 
+  height: 100%; 
+  overflow-x: hidden; 
+  margin: 0;
+}
+.content-wrapper {
+  width: 60%;
+  height: 100%;
+  margin: 0 auto;
+}
+aside.manager {
+  position: fixed;
+  background: lightblue;
+  width: 15%;
+  padding: 0px 20px 20px 20px;
+  left: 20px;
+  top: 20px;
+  border-radius: 6px;
+  h1 {
+    color: white;
+    font-size: 3em;
+    margin: 0;
+  }
+  .active-projects {
+    font-size: 1.1em;
+    margin: 0;
+  }
+}  
+.project-functions {
+  display: table;
+  width: 100%;
+  margin-top: 20px;
+  table-layout: fixed;
+  .widget {
+    text-align: center;
+    display: table-cell;
+    font-size: 2em;
+    width: 33%;
+    cursor: pointer;    
+    span {
+      transition: color 0.1s ease-in-out;      
+    }
+    &:hover span {
+      color: white;
+    }    
+  }
+  p {
+    font-size: 0.5em;
+    margin: -5px 0 0 0;
+  }
+}   
+.projects-wrapper {
+  width: 100%;
+  padding-bottom: 5px;
+  border-radius: 3px;
+}
+.project { 
+  width: 100%;      
+  position: relative;
+  padding-left: 50px;
+  margin: 20px 0;
+  &:last-of-type {
+    margin-bottom: 150px;
+  }
+  &.disabled {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(255,255,255,0.7);
+    }
+  }
+}
+.delete-project {
+  position: absolute;
+  left: 10px;
+  top: 33px;
+  color: #ddd;
+  font-size: 2em;
+  cursor: pointer;
+  transition: color 0.1s ease-in-out;  
+  &:hover {
+    color: red;  
+  }
+}
+.input-wrapper {
+  display: block;
+  vertical-align: bottom;
+  label {
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  input { 
+    background: transparent;
+    padding: 0 10px 0 0; 
+    width: 100%;
+    border: none;
+    color: grey;  
+    font-size: 1.5em;
+    @include placeholder(lightgrey);
+    &:focus {
+      outline: none;      
+    }   
+  }
+  &.input-name {
+    input {
+      font-size: 4em;      
+    }    
+  }
+  &.input-path { 
+    input {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+      color: lightblue;
+      &:focus {
+        border-color: lightblue;  
+      }
+    }    
+  }
+  &.input-delete {
+    text-align: center;
+  }
+}

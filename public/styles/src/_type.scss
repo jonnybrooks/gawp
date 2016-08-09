@@ -1,0 +1,47 @@
+/* type styles */
+
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700';
+@import 'https://fonts.googleapis.com/css?family=Ubuntu';
+@import 'https://fonts.googleapis.com/css?family=Jaldi:400,700';
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?kmf2g5');
+  src:  url('fonts/icomoon.eot?kmf2g5#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?kmf2g5') format('truetype'),
+    url('fonts/icomoon.woff?kmf2g5') format('woff'),
+    url('fonts/icomoon.svg?kmf2g5#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-save:before {
+  content: "\e903";
+}
+.icon-edit:before {
+  content: "\e904";
+}
+.icon-add:before {
+  content: "\e900";
+}
+.icon-revert:before {
+  content: "\e902";
+}
+.icon-delete:before {
+  content: "\e901";
+}

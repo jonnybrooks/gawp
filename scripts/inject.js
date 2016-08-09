@@ -2,7 +2,7 @@ var head = document.querySelector('head');
 var ref = document.querySelector('script[src="http://localhost:3000/gawp"]');
 var project = ref.getAttribute('data-project');
 var script = document.createElement('script');
-script.setAttribute('src', 'https://rawgit.com/socketio/socket.io-client/master/socket.io.js');
+script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js');
 script.onload = function(){
 	script = document.createElement('script');
 	script.innerHTML = `

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "express": "~4.13.1",
+    "body-parser": "~1.13.2",
     "socket.io": "^1.4.8",
     "watch": "^0.19.1"
   }
