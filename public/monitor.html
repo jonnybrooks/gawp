@@ -10,7 +10,7 @@
 	<body>
 		<div class="content-wrapper">
 			<aside class="manager">
-				<h1>gawp</h1>
+				<h1>gawp</h1>				
 				<p class="active-projects">Active gawpers: <span></span></p>
 				<div class="project-functions">
 					<div class="widget save">
@@ -22,7 +22,7 @@
 						<p>Revert All</p>
 					</div>
 					<div class="widget add">
-						<span class="icon-add" title="Add new gawper locally (hit save to commit them permanently)"></span>
+						<span class="icon-add" title="Schedule gawper for generation (hit commit to add it permanently)"></span>
 						<p>Add New</p>
 					</div>
 				</div>
@@ -32,11 +32,12 @@
 	</body>
 	<script id="template--project" type="text/template">
 		<div class="project">					
-			<div class="delete-project" title="\"Delete\" this gawper locally (hit save to commit them permanently)">
+			<div class="delete-project" title="Schedule gawper for deletion (hit commit to delete it permanently)">
 				<span class="icon-delete"></span>
+				<span class="icon-warning" title="Gawpers without a name are scheduled for automatic deletion"></span>
 			</div>
 			<div class="input-wrapper input-name">
-				<input class="name" placeholder="Project Name" name="projectName" type="text" />
+				<input class="name" placeholder="Gawper Name" name="projectName" type="text" />
 			</div>
 			<div class="input-wrapper input-path">
 				<input class="path" placeholder="path/to/project/files" name="projectPath" type="text" />
