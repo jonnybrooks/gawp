@@ -19,7 +19,7 @@ To provide a super simple way for web developers to add live reloading to their 
 without having to modify any of the server code. 
 
 Other packages annoyed me because I didn't like:
-* Unnecessary dependencies incurring overhead
+* Unnecessary dependencies incurring overhead (I have plans to prune the dependencies even further)
 * Learning esoteric syntax
 * Having to manipulate the server code for trivialities like changing monitor target directories
 
@@ -42,25 +42,26 @@ The admin panel should be pretty straightforward, but here are a few tips just i
 * "Deleting" gawpers from the admin panel only prepares them for deletion - you have to hit the commit button in the left pane to commit and save the changes to the `gawp.json` config file. 
 * Referring to the above, hitting the revert all button will reenable all gawpers scheduled for deletion, essentially aborting the process.
 * Additionally any gawpers that have an empty "name" field will be scheduled for deletion automatically - so name them if you don't want to lose them!
+* Duplicate gawpers (gawpers with the same name) will be deleted top to bottom, meaning the last duplicate gawper in the list will remain.
 
-
-Then you just have to reference one of your gawpers in the HTML you want to reload, using a `<script>` tag with the following signature (making sure the `data-project` attribute matches one of your gawper's names):
+Then you just have to reference one of your gawpers in the HTML you want to reload, using a `<script>` tag with the following signature (making sure the `data-gawper` attribute matches one of your gawper's names):
 
 #### `index.html` (excerpt from `<head>`)
 
 <pre>
 
-&lt;script src="http://localhost:3000/gawp" data-project="default"&gt;&lt;/script&gt;
+&lt;script src="http://localhost:3000/gawp" data-gawper="default"&gt;&lt;/script&gt;
 </pre>
+## Notes
 
-**Note**: If you're that way inclined, feel free to add/remove gawpers manually by editing the `gawp.json` file in the root of the package directory - JUST BE SURE TO ESCAPE BACKSLASHES, OR REPLACE THEM WITH FORWARD SLASHES, OR IT'LL GO BANG. 
+If you're that way inclined, feel free to add/remove gawpers manually by editing the `gawp.json` file in the root of the package directory - JUST BE SURE TO ESCAPE BACKSLASHES, OR REPLACE THEM WITH FORWARD SLASHES, OR IT'LL GO BANG. 
 
 #### `gawp.json` (example setup)
 
 <pre>
 
 {
-  "projects": {
+  "gawpers": {
     "default": "C:\\Users\\jonathan.brooks\\Documents\\node\\gawp\\public",
     "project 1": "path/to/project1/files"
   }
