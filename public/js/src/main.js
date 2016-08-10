@@ -4,6 +4,7 @@ $.getJSON( "http://localhost:3000/projects", projects => {
 	cache = JSON.parse(JSON.stringify(projects)) || {};
 	$('.active-projects span').text(Object.keys(projects).length);
 	$('.manager .widget.save').click(function(){
+		delete projects["default"];
 		$.post( "http://localhost:3000/update", projects, function(data, status) {
 			location.reload();
 		});
@@ -24,11 +25,12 @@ $.getJSON( "http://localhost:3000/projects", projects => {
 		$(frag).find('.project .name').val(name);
 		$(frag).find('.project .path').val(path);
 		$(frag).find('.input-name input').on('input', function(){
+			$(this).parents('.project').removeClass('force-deletion');
 			delete projects[index];
 			index = $(this).val();
 			projects[index] = path;
 			if($(this).val() === "") {
-				alert('You must give your gawper a name, or it will be removed from the project configuration file');
+				$(this).parents('.project').addClass('force-deletion');
 				delete projects[index]; 
 			}			
 		});
