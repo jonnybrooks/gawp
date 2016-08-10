@@ -5,16 +5,16 @@
 		<title>Gawp Monitor</title>
 		<link href="styles/dist/style.css" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-		<script src="http://localhost:3000/gawp" data-project="default"></script>		
+		<script src="http://localhost:3000/gawp" data-project="default"></script>
 	</head>
 	<body>
 		<div class="content-wrapper">
 			<aside class="manager">
 				<h1>gawp</h1>				
-				<p class="active-projects">Active gawpers: <span></span></p>
-				<div class="project-functions">
+				<p class="active-gawpers">Active gawpers: <span></span></p>
+				<div class="gawper-functions">
 					<div class="widget save">
-						<span class="icon-save" title="Commit changes to the project config (reloads the page)"></span>
+						<span class="icon-save" title="Commit changes to the gawper config (reloads the page)"></span>
 						<p>Commit</p>
 					</div>
 					<div class="widget revert">
@@ -27,17 +27,17 @@
 					</div>
 				</div>
 			</aside>			
-			<div class="projects-wrapper"></div>
+			<div class="gawpers-wrapper"></div>
 		</div>
 	</body>
-	<script id="template--project" type="text/template">
-		<div class="project">					
-			<div class="delete-project" title="Schedule gawper for deletion (hit commit to delete it permanently)">
+	<script id="template--gawper" type="text/template">
+		<div class="gawper">					
+			<div class="delete-gawper" title="Schedule gawper for deletion (hit commit to delete it permanently)">
 				<span class="icon-delete"></span>
 				<span class="icon-warning" title="Gawpers without a name are scheduled for automatic deletion"></span>
 			</div>
 			<div class="input-wrapper input-name">
-				<input class="name" placeholder="Gawper Name" name="projectName" type="text" />
+				<input class="name" placeholder="Gawper Name" name="gawperName" type="text" />
 			</div>
 			<div class="input-wrapper input-path">
 				<input class="path" placeholder="path/to/project/files" name="projectPath" type="text" />

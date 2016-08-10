@@ -1,48 +1,48 @@
 let cache = {};
 
-$.getJSON( "http://localhost:3000/projects", projects => {
-	cache = JSON.parse(JSON.stringify(projects)) || {};
-	$('.active-projects span').text(Object.keys(projects).length);
+$.getJSON( "http://localhost:3000/gawpers", gawpers => {
+	cache = JSON.parse(JSON.stringify(gawpers)) || {};
+	$('.active-gawpers span').text(Object.keys(gawpers).length);
 	$('.manager .widget.save').click(function(){
-		delete projects["default"];
-		$.post( "http://localhost:3000/update", projects, function(data, status) {
+		delete gawpers["default"];
+		$.post( "http://localhost:3000/update", gawpers, function(data, status) {
 			location.reload();
 		});
 	});
 	$('.manager .widget.revert').click(function(){
-		$('.project').removeClass('disabled');
-		projects = cache;
+		$('.gawper').removeClass('disabled');
+		gawpers = cache;
 	});
 	$('.manager .widget.add').click(function(){
-		projects['New Gawper'] = '';
-		buildProject('New Gawper', '');
+		gawpers['New Gawper'] = '';
+		buildgawper('New Gawper', '');
 	});
-	$.each(projects, buildProject);
+	$.each(gawpers, buildgawper);
 
-	function buildProject (name, path){
-    	let frag = utils.fragment($('#template--project').html());
+	function buildgawper (name, path){
+    	let frag = utils.fragment($('#template--gawper').html());
 		let index = name;
-		$(frag).find('.project .name').val(name);
-		$(frag).find('.project .path').val(path);
+		$(frag).find('.gawper .name').val(name);
+		$(frag).find('.gawper .path').val(path);
 		$(frag).find('.input-name input').on('input', function(){
-			$(this).parents('.project').removeClass('force-deletion');
-			delete projects[index];
+			$(this).parents('.gawper').removeClass('force-deletion');
+			delete gawpers[index];
 			index = $(this).val();
-			projects[index] = path;
+			gawpers[index] = path;
 			if($(this).val() === "") {
-				$(this).parents('.project').addClass('force-deletion');
-				delete projects[index]; 
+				$(this).parents('.gawper').addClass('force-deletion');
+				delete gawpers[index]; 
 			}			
 		});
 		$(frag).find('.input-path input').on('input', function(){
 			path = $(this).val();
-			projects[index] = path;
+			gawpers[index] = path;
 		});
-		$(frag).find('.project .delete-project').click(function(){
+		$(frag).find('.gawper .delete-gawper').click(function(){
 			$(this).parent().addClass('disabled');
-			delete projects[name];
+			delete gawpers[name];
 		});		
-		$('.projects-wrapper').append(frag);
+		$('.gawpers-wrapper').append(frag);
     }
 });
 

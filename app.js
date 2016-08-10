@@ -8,8 +8,17 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 var users = {};
-var projects = JSON.parse(fs.readFileSync('gawp.json')).projects;
-    projects = Object.keys(projects).length === 0 ? { default: path.join(__dirname, 'public') } : projects;
+var gawpers = {}; 
+
+try {
+  gawpers = JSON.parse(fs.readFileSync('gawp.json'));
+  gawpers = gawpers.gawpers || gawpers.projects || {};  
+}
+catch(e) {
+  console.log("gawp.json likely empty - falling back to default");  
+}
+
+gawpers = Object.keys(gawpers).length === 0 ? { default: path.join(__dirname, 'public') } : gawpers;
 
 app.set('port', (3000));
 app.use(express.static('public'));
@@ -28,16 +37,16 @@ app.get('/', function (req, res){
 });
 
 app.post('/update', function (req, res){
-  fs.writeFile('gawp.json', JSON.stringify({ projects: req.body }, null, '\t'), (err) => {
+  fs.writeFile('gawp.json', JSON.stringify({ gawpers: req.body }, null, '\t'), (err) => {
     if (err) throw err;
     console.log('Written to gawp.json from gawp web monitor');
     res.status(200).end('success');
   });  
 });
 
-app.get('/projects', function (req, res){
+app.get('/gawpers', function (req, res){
   res.set('Content-Type', 'application/json');
-  res.status(200).end(JSON.stringify(projects));
+  res.status(200).end(JSON.stringify(gawpers));
 });
 
 app.get('/gawp', function (req, res){
@@ -54,17 +63,20 @@ http.listen(app.get('port'), function () {
 
 io.sockets.on('connection', function (socket){
   users[socket.conn.id] = socket;
-  socket.on('link_project', function (data){
-    if(typeof data.project === "undefined" || typeof projects[data.project] === "undefined") return;
-    watch.watchTree(projects[data.project], function (f, curr, prev) {
+  socket.on('link_gawper', function (data){
+    if(typeof data.gawper === "undefined" || typeof gawpers[data.gawper] === "undefined") {
+      users[socket.conn.id].emit('no_gawper');
+      return;
+    }
+    watch.watchTree(gawpers[data.gawper], function (f, curr, prev) {
       if(typeof f == "object" && prev === null && curr === null) return;
       if(typeof users[socket.conn.id] === "undefined") return;
       users[socket.conn.id].emit('reload');
     });    
   });
   socket.on('end', function (data){
-    if(typeof data.project === "undefined" || typeof projects[data.project] === "undefined") return;
-    watch.unwatchTree(projects[data.project]);
+    if(typeof data.gawper === "undefined" || typeof gawpers[data.gawper] === "undefined") return;
+    watch.unwatchTree(gawpers[data.gawper]);
     if(typeof users[socket.conn.id] === "undefined") return;
     delete users[socket.conn.id];
   });

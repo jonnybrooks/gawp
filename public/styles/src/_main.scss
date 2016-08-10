@@ -47,12 +47,12 @@ html, body {
     font-size: 3em;
     margin: 0;
   }
-  .active-projects {
+  .active-gawpers {
     font-size: 1.1em;
     margin: 0;
   }
 }  
-.project-functions {
+.gawper-functions {
   display: table;
   width: 100%;
   margin-top: 20px;
@@ -75,13 +75,13 @@ html, body {
     margin: -5px 0 0 0;
   }
 }   
-.projects-wrapper {
+.gawpers-wrapper {
   width: 100%;
   padding-left: 21%;
   padding-bottom: 5px;
   border-radius: 3px;
 }
-.project { 
+.gawper { 
   width: 90%;      
   position: relative;
   padding-left: 50px;
@@ -111,7 +111,7 @@ html, body {
       background: rgba(255,0,0,0.05);
       z-index: -10;
     }
-    .delete-project {
+    .delete-gawper {
       .icon-delete {
         display: none;
       }  
@@ -122,7 +122,7 @@ html, body {
     }
   }
 }
-.delete-project {
+.delete-gawper {
   position: absolute;
   left: 10px;
   top: 33px;
